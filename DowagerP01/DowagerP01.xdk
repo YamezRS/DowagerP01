@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.iotapp",
       "src": "iotapp/iotapp-template-blank-iot/sample.zip",
       "projectGuid": "d0e6912c-9f9b-432b-bbe3-54268b052c33",
-      "lastModifiedDate": 1466465792415,
+      "lastModifiedDate": 1466466797314,
       "creationDate": 1466465792095
     },
     "sourceDirectory": "",
@@ -14,7 +14,15 @@
     "gameMetadata": {},
     "startFile": "main.js",
     "projectTags": [],
-    "projectFiles": {},
+    "projectFiles": {
+      "xdk-publish-meta-data.json": {
+        "settings": {
+          "project": {
+            "XDK-not-deployed": "True"
+          }
+        }
+      }
+    },
     "projectDirectories": {
       "xdk": {
         "settings": {
