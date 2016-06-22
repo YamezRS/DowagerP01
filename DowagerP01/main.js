@@ -21,11 +21,12 @@ var mraa = require('mraa'); //require mraa
 console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the Intel XDK console
 
 //initialize show running LED - indicates show program is active
-var ShowLED = new mraa.Gpio(41);
+var ShowLED = new mraa.Gpio(41);//correct address, temporarily disabled
+//var ShowLED = new mraa.Gpio(13);
 ShowLED.dir(mraa.DIR_OUT);
 
 //initialize ready led - indicates board is running and ready to recieve show start signal
-var ReadyLED = new mraa.Gpio(40);
+var ReadyLED = new mraa.Gpio(40); 
 ReadyLED.dir(mraa.DIR_OUT);
 
 
@@ -35,8 +36,8 @@ ProgramTrigger.dir(mraa.DIR_IN);
 ProgramTrigger.isr(mraa.EDGE_FALLING,runProgram);
 
 //Initialize cue channel array
+//TR
 /*var ledArray = [];
-var CUEtimeoutArray = [];
 for (var i = 11; i < 14; i++) 
 {
     ledArray[i] = new mraa.Gpio(i);
@@ -45,6 +46,7 @@ for (var i = 11; i < 14; i++)
 console.log(ledArray);*/
 
 //Initialize Timer Value Array
+var CUEtimeoutArray = [];
 var timerArray = [];
 timerArray[11] = 10000;
 timerArray[12] = 10000;
@@ -74,6 +76,8 @@ function LEDoff(LEDindex)
     if(LEDindex == 13)
     {
         reset();
+        ShowLED.write(0);
+        console.log("Show LED OFF");
     }
         
     
@@ -96,6 +100,7 @@ function runProgram()
 {
         //Trigger program LED
         ShowLED.write(1);
+        console.log("Show LED ON");
         console.log("Program Started");
         
         //Trigger LEDs timing
@@ -127,6 +132,7 @@ function mainLoop()
 {
     console.log("Program Ready");
     ReadyLED.write(1);
+    console.log("Ready LED ON");
     setTimeout(periodicTrigger, 2000);
         
     
