@@ -29,23 +29,25 @@ ShowLED.dir(mraa.DIR_OUT);
 var ReadyLED = new mraa.Gpio(40); 
 ReadyLED.dir(mraa.DIR_OUT);
 
-
 //initialize program trigger interrupt
 var ProgramTrigger = new mraa.Gpio(31);
 ProgramTrigger.dir(mraa.DIR_IN);
 ProgramTrigger.isr(mraa.EDGE_FALLING,runProgram);
 
 //Initialize cue channel array
-//TR
-/*var ledArray = [];
-for (var i = 11; i < 14; i++) 
+var cuePINS = [ 13, 11, 10, 9, 8, 7, 6, 2, 0, 19, 15, 14, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55 ]; //CUE #8 disabled because of UART, maybe, who knows?
+
+var ledArray = [];
+for (var i = 1; i < 25; i++) 
 {
-    ledArray[i] = new mraa.Gpio(i);
-    ledArray[i].dir(mraa.DIR_OUT);
+    console.log(i,cuePINS[i]);
+    //ledArray[i] = new mraa.Gpio(cuePINS[i]);
+    //ledArray[i].dir(mraa.DIR_OUT);
 }
-console.log(ledArray);*/
+//console.log(ledArray);
 
 //Initialize Timer Value Array
+var boardNumber = 1;
 var CUEtimeoutArray = [];
 var timerArray = [];
 timerArray[11] = 10000;
