@@ -35,24 +35,37 @@ ProgramTrigger.dir(mraa.DIR_IN);
 ProgramTrigger.isr(mraa.EDGE_FALLING,runProgram);
 
 //Initialize cue channel array
-var cuePINS = [ 13, 11, 10, 9, 8, 7, 6, 2, 0, 19, 15, 14, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55 ]; //CUE #8 disabled because of UART, maybe, who knows?
-
-var ledArray = [];
+// Define pin addresses for Edison breakout board
+var cuePinAddress = [ 13, 11, 10, 9, 8, 7, 6, 2, 0, 19, 15, 14, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55 ]; //CUE #8 disabled because of UART, maybe, who knows?
+var cueArray = [];
 for (var i = 1; i < 25; i++) 
 {
-    console.log(i,cuePINS[i]);
-    //ledArray[i] = new mraa.Gpio(cuePINS[i]);
-    //ledArray[i].dir(mraa.DIR_OUT);
+    console.log(i,cuePinAddress[i]);
+    //cueArray[i] = new mraa.Gpio(cuePinAddress[i]);
+    //cueArray[i].dir(mraa.DIR_OUT);
 }
-//console.log(ledArray);
+//console.log(cueArray); 
+
+//Define which channels are enabled
+//timer array index 1     2      3      4      5      6      7      8      9     10      11    12      13     14     15     16     17     18     19     20    21      22     23    24   
+var cueEnabled = [TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE]
 
 //Initialize Timer Value Array
 var boardNumber = 1;
 var CUEtimeoutArray = [];
 var timerArray = [];
-timerArray[11] = 10000;
-timerArray[12] = 10000;
-timerArray[13] = 10000;
+
+//intialize timerarray for 
+//timer array index 1    2    3    4    5     6    7     8     9    10  11    12   13   14    15    16    17   18  19    20   21   22   23    24   
+
+var timerArray = [[200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200],
+                  [200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200],
+                  [200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200],
+                  [200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200, 200, 400, 600, 800, 1000, 1200],];
+
+//timerArray[11] = 10000;
+//timerArray[12] = 10000;
+//timerArray[13] = 10000;
 console.log(timerArray);
 
 //Time to burn 
@@ -60,38 +73,39 @@ burnTime = 500;
 
 mainLoop(); //call the main function
 
-//funtion triggers LEDs on
-function TriggerLED(LEDindex)
+//funtion triggers CUEs on
+function TriggerCUE(CUEindex)
 {
-    //ledArray[LEDindex].write(1);
-    console.log("LED ON!", LEDindex);
-    setTimeout(LEDoff,burnTime,LEDindex);
+    //ledArray[CUEindex].write(1);
+    console.log("CUE ON!", CUEindex);
+    setTimeout(CUEoff,burnTime,CUEindex);
 
 }
         
-//funtion triggers LEDs off
-function LEDoff(LEDindex)
+//funtion triggers CUEs off
+function CUEoff(CUEindex)
 {
-    //ledArray[LEDindex].write(0);
-    console.log("LED OFF!", LEDindex);
+    //cueArray[CUEindex].write(0);
+    console.log("CUE OFF!", CUEindex);
     // Call reset function at the end of the show..
-    if(LEDindex == 13)
+    if(CUEindex == 13)
     {
         reset();
         ShowLED.write(0);
         console.log("Show LED OFF");
     }
         
-    
-    
 }
 
 //function sets timers for leds based on ms values in timer array
-function setLEDtimer()
+function setCUEtimer()
 {
     for (var i = 11; i < 14; i++) {
-        
-        CUEtimeoutArray[i] = setTimeout(TriggerLED,timerArray[i],i);
+        if (cueEnabled[i] = true){
+
+            CUEtimeoutArray[i] = setTimeout(TriggerCUE,cueArray[i],i);
+
+        }
         
     }
     console.log("Timers Set"); 
@@ -106,7 +120,7 @@ function runProgram()
         console.log("Program Started");
         
         //Trigger LEDs timing
-        setLEDtimer();
+        setCUEtimer();
 }
 
 //Cancel remaining timers and reset all
