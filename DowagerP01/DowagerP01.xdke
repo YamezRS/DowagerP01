@@ -18,8 +18,8 @@
         "name": "DowagerP01.xdk"
       },
       "DowagerP01.xdke": {
-        "previousModTime": 1466895620000,
-        "modified": 1466895620000,
+        "previousModTime": 1467143619000,
+        "modified": 1467143619000,
         "seen": true,
         "name": "DowagerP01.xdke"
       },
@@ -36,8 +36,8 @@
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1466886149000,
-        "modified": 1466886149000,
+        "previousModTime": 1467143810000,
+        "modified": 1467143810000,
         "seen": true,
         "name": "main.js"
       },
@@ -60,6 +60,10 @@
         "name": "xdk/project-info.json"
       }
     },
-    "boardFileStatus": {}
+    "boardFileStatus": {
+      "main.js": {
+        "previousModTime": 1467143812243
+      }
+    }
   }
 }
